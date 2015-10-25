@@ -1,5 +1,6 @@
-﻿import tweepy
-
+﻿# Developed and modified by Ye Liang at 15:21 Oct,25 2015
+# All rights reserved
+import tweepy
 
 def TwitterMood(query, since_id):
 #User authentication: Ye Liang(梁也)
@@ -24,9 +25,9 @@ def TwitterMood(query, since_id):
 def NewTweets(api,query,since_id):
     try:
         if (since_id == 1):
-            new_tweets = api.search(q=query, count=100)
+            new_tweets = api.search(q=query, count=100, lan = "en")
         else:
-            new_tweets = api.search(q=query, count=100, since_id = since_id)
+            new_tweets = api.search(q=query, count=100, lan = "en", since_id = since_id)
         if (not new_tweets):
             return ([],0)
         new_id = new_tweets[-1].id

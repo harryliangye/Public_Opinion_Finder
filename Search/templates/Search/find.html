@@ -2,7 +2,11 @@
     <ul>
     {% for result in result_list %}
         <li>
-        	{{ result }}
+            {% if result.url != "empty" %}
+        	   <a href="{{ result.url }}"> {{ result.text }} </a>
+            {% else %}
+                {{ result.text }}
+            {% endif %}
         </li>
     {% endfor %}
     </ul>
