@@ -1,13 +1,14 @@
 {% if result_list %}
-    <ul>
+<h2><center>Search Result for : "{{query}}"</center></h2><br>
+    <ul style="list-style-type:square">
     {% for result in result_list %}
         <li>
+            {{ result.text }}
             {% if result.url != "empty" and result.url|length > 10 %}
-        	   <a href="{{ result.url }}"> {{ result.text }} </a>
-            {% else %}
-                {{ result.text }}
+               <a href="{{ result.url }}"> -> link <- </a>
             {% endif %}
         </li>
+        <br>
     {% endfor %}
     </ul>
 {% else %}
@@ -17,10 +18,10 @@
  <form align="center" action="" name="P" method="post">
  {% csrf_token %}
 	{% if page > 1 %}
- 	<input type="submit" name = "P" value="<- Previous Page">
+ 	<input type="submit" name = "P" value="<< Previous Page">
 	{% endif %}
     {% if result_list|length == 20 %}
-	<input type="submit" name = "N" value="Next Page ->">
+	<input type="submit" name = "N" value="Next Page >>">
     {% endif %}
 </form>
 

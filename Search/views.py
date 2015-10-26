@@ -30,16 +30,16 @@ def home_page(request):
 def find(request):
 	if (request.method == 'GET'):
 		return_uid = AllocateNewMemory(request.GET['query'])
-		(page, search_results) = UsrReqPro(return_uid, 0)
+		(page, search_results, query) = UsrReqPro(return_uid, 0)
 	else:
 		return_uid = request.session.get('visitor_id')
 		if('P' in request.POST):
 			action = -1
 		else:
 			action = 0
-		(page,search_results) = UsrReqPro(return_uid, action)
+		(page, search_results, query) = UsrReqPro(return_uid, action)
 	request.session['visitor_id'] = return_uid
-	return render(request,'Search/find.html',{'result_list':search_results, 'page':page})
+	return render(request,'Search/find.html',{'query':query, 'result_list':search_results, 'page':page})
 
 def UsrReqPro(return_id, action):
 	# action == 1 : next, action == 0 : previous
@@ -57,8 +57,9 @@ def UsrReqPro(return_id, action):
 				g_runtime_memory[usr].page += 1
 #------------------return begins-----------------------begins-----------------------begins----------------------------------------------------------------------------------------------------------
 			return_page = g_runtime_memory[usr].page
+			return_q = g_runtime_memory[usr].query
 			return_results = g_runtime_memory[usr].search_results[((g_runtime_memory[usr].page - 1)* 20) : (g_runtime_memory[usr].page * 20)]
-			return (return_page, return_results)	
+			return (return_page, return_results, return_q)	
 	return None
 
 def AllocateNewMemory(query):
