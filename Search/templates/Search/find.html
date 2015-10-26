@@ -2,7 +2,7 @@
     <ul>
     {% for result in result_list %}
         <li>
-            {% if result.url != "empty" %}
+            {% if result.url != "empty" and result.url|length > 10 %}
         	   <a href="{{ result.url }}"> {{ result.text }} </a>
             {% else %}
                 {{ result.text }}
@@ -19,7 +19,9 @@
 	{% if page > 1 %}
  	<input type="submit" name = "P" value="<- Previous Page">
 	{% endif %}
+    {% if result_list|length == 20 %}
 	<input type="submit" name = "N" value="Next Page ->">
+    {% endif %}
 </form>
 
  <a href="http://harryliangye.pythonanywhere.com">Back to Home Page</a>

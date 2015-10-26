@@ -15,8 +15,8 @@ def NewResult(twitter_query, twitter_sid, result_count):
 #------------------------------filter--------------------------------------#
 		if(len(twi_result) > 0):
 			ntwitter_result = TwitterFilter(twi_result)
-		if(len(ntwitter_result) > 0):
-			new_result += ntwitter_result
+			if(len(ntwitter_result) > 0):
+				new_result += ntwitter_result
 #------------------------------filter--------------------------------------#
 #----------------------twitter-engine--------------------------------------#
 # more engines will be available...
