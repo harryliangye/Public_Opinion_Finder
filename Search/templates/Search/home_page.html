@@ -3,15 +3,57 @@
 <style type="text/css">.newStyle1{font-family: Cambria,Cochin, Georgia,Times, "Times New Roman", serif;}#Text1 {width: 611px;height: 26px;}
 </style><br><br><br>
 <body>
-	<h1><center>Welcome to Public Opinion Finder V0.5</center></h1><br><br><br><br>
+	<h1><center>Welcome to Public Opinion Finder V0.6</center></h1><br><br><br><br>
 	<form align="center" action="find/" method="get">
 		<input id="key_word" type="text" name="query" maxlength="128" style = "width:512"> 
 		<input type="submit" value="Find !">
 	</form>
 	<center>
 	{% load staticfiles %}
-	<img src="{% static "Search/images/background1.gif" %}" style="height: 220px; width: 220px; margin-left: 0px"/>
-	<img src="{% static "Search/images/background2.gif" %}" style="height: 180px; width: 320px; margin-left: 30px"/>
-	<a href = "http://www.uvic.ca">Powered by Django</a>
-	</center>
-</body>
+
+  <div style="display:table">
+    <div id="chart_div" style="display:table-cell;horizontal-align:left;" ></div>
+    <img src="{% static "Search/images/background2.gif" %}" style="display:table-cell;horizontal-align:right;height: 180px; width: 320px; margin-left: 0px"/>
+    <a style="float:right" href = "http://www.uvic.ca" >Powered by Uvic</a>
+  </div>
+        
+
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['Love', 3323],
+          ['Like', 1123],
+          ['Ok', 1221],
+          ['Dislike', 562],
+          ['Hate', 20]
+        ]);
+
+        // Set chart options
+        var options = {'title':'How Does Public Think About Me?',
+                       'width':350,
+                       'height':200};
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+
+    <!--Div that will hold the pie chart-->
+    

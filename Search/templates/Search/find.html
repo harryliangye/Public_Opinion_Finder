@@ -3,7 +3,14 @@
     <ul style="list-style-type:square">
     {% for result in result_list %}
         <li>
-            {{ result.text }}
+            {{ result.text }} 
+            {% if result.polarity > 0.2 %}
+                <span style="background:green;">Happy</span>
+                {% elif result.polarity > 0 %}
+                    <span style="background:yellow;">Neutral</span>
+                {% else %}
+                    <span style="background:red;">Sad</span>
+            {% endif %}
             {% if result.url != "empty" and result.url|length > 10 %}
                <a href="{{ result.url }}"> -> link <- </a>
             {% endif %}
@@ -23,6 +30,11 @@
     {% if result_list|length == 20 %}
 	<input type="submit" name = "N" value="Next Page >>">
     {% endif %}
+</form>
+
+<form align="center" action="SentimentView/" name="SentimentView" method="post">
+{% csrf_token %}
+<input type="submit" name = "" value="Sentiment Analysis">
 </form>
 
  <a href="http://harryliangye.pythonanywhere.com">Back to Home Page</a>
