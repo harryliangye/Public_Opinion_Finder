@@ -9,15 +9,15 @@
 <center>
 <form align="center" action="SentimentView/" name="M" method="post" style="display:table">
  {% csrf_token %}
-    <a href="http://harryliangye.pythonanywhere.com/" class="button">Return to Home Page</a>
+    <a href="http://harryliangye.pythonanywhere.com/"><button type="button" class="button"><span class="glyphicon glyphicon-signal"></span>Return to Home Page</button></a>
     &nbsp;&nbsp;&nbsp;
     <input type="submit" name = "S" value="Sentiment Anslysis" class = "button" onclick="showDiv()">
     &nbsp;&nbsp;&nbsp;
-    <a href="http://harryliangye.pythonanywhere.com/Search/" class="button">New Search</a>
+    <a href="http://harryliangye.pythonanywhere.com/Search/"><button type="button" class="button"><span class="glyphicon glyphicon-signal"></span>New Search</button></a>
 </form>
     <div id="loadpage" style="display:none;position:absolute; 
     left:0px; top:0px; background-color:white; 
-    layer-background-color:white; height:100%; 
+    layer-background-color:white; height:200%; 
     width:100%;"> 
       <p align="center" style="font-size: large;">
         <B>Analyzing ... ... Please wait!</B>

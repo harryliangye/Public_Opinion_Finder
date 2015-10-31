@@ -49,6 +49,8 @@ def SentimentView(request):
 		(render_data, query) = SentimentRequestProcess(return_uid)
 		if render_data is None:
 			return HttpResponse("Dont't use backspace in your browser, please return main page")
+		elif render_data == 'less than 1k':
+			return HttpResponse("Not enough comments(less than 1k) for statistical analysis for this topic")
 		else:
 			return render(request,'Search/SentimentView.html',{'query':query ,'pos':render_data[0],
 															'neg':render_data[1],'neu':render_data[2],

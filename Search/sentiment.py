@@ -41,4 +41,4 @@ def SentimentAnalyzer1000(content_list):
 		# gauge_data1: return_type[3] gauge_data2: return_type[4] curve:[5] scatter:return_type[6], 
 		return(return_type)
 	else:
-		return None
+		return 'less than 1k'
