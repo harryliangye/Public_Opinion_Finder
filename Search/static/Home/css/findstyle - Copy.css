@@ -1,0 +1,91 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #444;
+}
+.button {
+     
+    /*Step 2: Basic Button Styles*/
+    display: block;
+    height: 100px;
+    width: 300px;
+    background: #34696f;
+    border: 2px solid rgba(33, 68, 72, 0.59);
+     
+    /*Step 3: Text Styles*/
+    color: rgba(0, 0, 0, 0.55);
+    text-align: center;
+    font: bold 3.2em/100px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+     
+    /*Step 4: Fancy CSS3 Styles*/
+    background: -webkit-linear-gradient(top, #34696f, #2f5f63);
+    background: -moz-linear-gradient(top, #34696f, #2f5f63);
+    background: -o-linear-gradient(top, #34696f, #2f5f63);
+    background: -ms-linear-gradient(top, #34696f, #2f5f63);
+    background: linear-gradient(top, #34696f, #2f5f63);
+     
+    -webkit-border-radius: 50px;
+    -khtml-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+     
+    -webkit-box-shadow: 0 8px 0 #1b383b;
+    -moz-box-shadow: 0 8px 0 #1b383b;
+    box-shadow: 0 8px 0 #1b383b;
+     
+    text-shadow: 0 2px 2px rgba(255, 255, 255, 0.2);
+     
+}
+ 
+/*Step 3: Link Styles*/
+a.button2 {
+    text-decoration: none;
+}
+ 
+/*Step 5: Hover Styles*/
+a.button:hover {
+    background: #3d7a80;
+    background: -webkit-linear-gradient(top, #3d7a80, #2f5f63);
+    background: -moz-linear-gradient(top, #3d7a80, #2f5f63);
+    background: -o-linear-gradient(top, #3d7a80, #2f5f63);
+    background: -ms-linear-gradient(top, #3d7a80, #2f5f63);
+    background: linear-gradient(top, #3d7a80, #2f5f63);
+}
+/*
+ * Create dark grey header with a white logo
+ */
+  
+body {
+  background-color: rgb(39,40,34);
+  height: 500px;
+  width: 100%;
+  opacity: .9;
+  margin-bottom: 10px;
+}
+ 
+.logo {
+  margin: 0;
+  font-size: 5em;
+  color: #fff;
+  text-transform: lowercase;
+  float: center;
+  text-decoration: none;
+  background-color: rgb(39,40,34);
+}
+ 
+body h1.logo:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+a:hover, a:visited, a:link, a:active
+{
+    background-color: rgb(39,40,34);
+    text-decoration: none;
+}
+
+/*
+ * Center the body content
+ */
+  

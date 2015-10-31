@@ -17,8 +17,9 @@ class Search_Result:
 	def __init__(self, text, url):
 		self.text = text
 		self.url = url
-		self.poparity = -9.9     #range from -1.0 to 1.0
-		self.subjectivity = -9.9 #range from 0.0 to 1.0
+		self.polarity = -9.9
+		self.subjectivity = -9.9    #range from -1.0 to 1.0 #range from 0.0 to 1.0
+		#self.sentiment[1]:subjectivity self.sentiment[0]: spolarization
 
 def IsValidInformation(content):
 	if(len(content) > 5):

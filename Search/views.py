@@ -19,7 +19,7 @@ class Search_Scene:
 		self.usr_id = usrid
 		self.search_results = []
 
-for g_memory_pointer in range(0,100):
+for g_memory_pointer in range(0,200):
 	new_scene = Search_Scene(-1)
 	g_runtime_memory.append(new_scene)
 #End---------------------------------------Server-Initialization--------------------------------------End#
@@ -28,6 +28,8 @@ def home_page(request):
 
 def find(request):
 	if (request.method == 'GET'):
+		if(request.GET['query'] == ""):
+			return HttpResponseRedirect("/")
 		return_uid = AllocateNewMemory(request.GET['query'])
 		(page, search_results, query) = UsrReqPro(return_uid, 0)
 	else:
@@ -44,21 +46,30 @@ def SentimentView(request):
 	if (request.method == "POST"):
 		return_uid = request.session.get('visitor_id')
 		request.session['visitor_id'] = return_uid
-		render_data = SentimentRequestProcess(return_uid)
-		return render(request,'Search/SentimentView.html',{'pos':render_data[0],'neu':render_data[1],'neg':render_data[2]})
+		(render_data, query) = SentimentRequestProcess(return_uid)
+		if render_data is None:
+			return HttpResponse("Dont't use backspace in your browser, please return main page")
+		else:
+			return render(request,'Search/SentimentView.html',{'query':query ,'pos':render_data[0],
+															'neg':render_data[1],'neu':render_data[2],
+															'gau1':render_data[3],'gau2':render_data[4],
+															'curv':render_data[5],'scat':render_data[6]})
 	else:
 		return None
 
 def SentimentRequestProcess(return_uid):
 	global g_runtime_memory
 	usr = FindUser(return_uid)
+	if usr is None:
+		return(None,None)
+	query = g_runtime_memory[usr].query
 	if (len(g_runtime_memory[usr].search_results) < 1000):
 		(new_result, g_runtime_memory[usr].twitter_sid) = NewResult(g_runtime_memory[usr].query, 
 			g_runtime_memory[usr].twitter_sid, 1000 - len(g_runtime_memory[usr].search_results))
 		SentimentAnalyzer(new_result)
 		g_runtime_memory[usr].search_results += new_result
 	data_set = SentimentAnalyzer1000(g_runtime_memory[usr].search_results)
-	return data_set
+	return (data_set, query)
 
 def UsrReqPro(return_id, action):
 	# action == 1 : next, action == 0 : previous

@@ -25,9 +25,9 @@ def TwitterMood(query, max_id):
 def NewTweets(api, query, max_id):
     try:
         if (max_id == 1):
-            new_tweets = api.search(q=query, count=100, lan = "en")
+            new_tweets = api.search(q=query, count=100, lang = "en")
         else:
-            new_tweets = api.search(q=query, count=100, lan = "en", max_id = max_id)
+            new_tweets = api.search(q=query, count=100, lang = "en", max_id = max_id)
         if (not new_tweets):
             return ([],0)
         new_id = str(new_tweets[-1].id - 1)

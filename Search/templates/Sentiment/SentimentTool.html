@@ -1,0 +1,20 @@
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<title>Public Opinion Finder</title>
+<style type="text/css">.newStyle1{font-family: Cambria,Cochin, Georgia,Times, "Times New Roman", serif;}#Text1 {width: 611px;height: 26px;}
+</style><br>
+<body>
+<center>
+	<h1>Sentiment Analysis Tool</h1>
+	{% if sentiment != None %}
+		Sentiment Value: {{sentiment}} (From -1 to +1)
+	{% endif %}
+	<h3>Type Your Content Below And Click Analyze!</h3>
+	<form align="center" action="" method="post">{% csrf_token %}
+		<textarea name="text" cols=50 rows=20></textarea>
+		<br>
+		<input type="submit" value="Analyze!">
+	</form>
+
+	<a href='http://harryliangye.pythonanywhere.com' align="rcenter">Return to Home Page</a>
+</center>
+</body>

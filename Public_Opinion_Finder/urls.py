@@ -20,5 +20,8 @@ from . import views
 urlpatterns = [
 	url(r'^$', views.home),
     url(r'^Search/', include('Search.urls', namespace = "Search")),
+    url(r'^Sentiment/', include('Sentiment.urls', namespace = "Sentiment")),
+    url(r'^Finance/',views.UnderConstruction),
+    url(r'^Author/',views.Author),
 	url(r'^admin/', include(admin.site.urls)),
 ]

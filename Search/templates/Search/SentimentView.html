@@ -1,44 +1,135 @@
- {% if pos != None %}
+{% if pos != None %}
+{% load staticfiles %}
+<head>
+  <title>Sentiment Analysis</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'Search/css/findstyle.css'%}">
+</head>
+<h1><center>Sentiment Analysis For : "{{query}}"</center></h1>
+<br>
+<center>
+    <a href="http://harryliangye.pythonanywhere.com/" class="button">Return to Home Page</a>
+    &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;
+    <a href="http://harryliangye.pythonanywhere.com/Search/" class="button">New Search</a>
+</center>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  google.load('visualization', '1.1', {packages: ['corechart','gauge','scatter','line']});
+  // Set a callback to run when the Google Visualization API is loaded.
+  //pie chart--------------------------------------
+  google.setOnLoadCallback(drawCharts);
+  // draws it.
+  function PieChart(chartReady)
+  {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Topping');
+    data.addColumn('number', 'Slices');
+    data.addRows([['Positive', {{pos}}],['Negative', {{neg}}],['Neutual',{{neu}}]]);
+    var options = {'title':'Polarized Statistical Result','is3D': true,'width':600,'height':500};
+    var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
+    if (typeof chartReady !== 'undefined') google.visualization.events.addOneTimeListener(chart, 'ready', chartReady);
+    chart.draw(data, options);
+  }
+  //gauge chart--------------------------------------
+  function GaugeChart(chartReady) 
+  {
+    var gauge_data1 = google.visualization.arrayToDataTable([['Label', 'Value'],['Sentiment', {{gau1}}]]);
+    var gauge_opt1 = 
+    {
+      width: 300, height: 300,
+      min:1, max:-1,
+      redFrom: -0.2, redTo: -1,
+      yellowFrom:0.2, yellowTo: -0.2,
+      greenFrom: 1, greenTo:0.2,
+      minorTicks: 5
+    };
+    var gauge_data2 = google.visualization.arrayToDataTable([['Label', 'Value'],['Subjectivity', {{gau2}}]]);
+    var gauge_opt2 = 
+    {
+      width: 200, height: 200,
+      min:0, max:1,
+      redFrom: 0.6, redTo: 1.0,
+      yellowFrom:0.5, yellowTo: 0.6,
+      greenFrom: 0, greenTo:0.5,
+      minorTicks: 5
+    };
+    var gauge1 = new google.visualization.Gauge(document.getElementById('gauge_chart1'));
+    var gauge2 = new google.visualization.Gauge(document.getElementById('gauge_chart2'));
+    if (typeof chartReady !== 'undefined') google.visualization.events.addOneTimeListener(chart, 'ready', chartReady);
+    gauge1.draw(gauge_data1, gauge_opt1);
+    gauge2.draw(gauge_data2, gauge_opt2);
+  }
+  //scatter chart--------------------------------------
+  function ScatterChart(chartReady) 
+  {
+    var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Subjectivity');
+        data.addColumn('number', 'Opinions');
+        {% for sct in scat %}
+        data.addRow([{{sct.0}},{{sct.1}}]);
+        {% endfor %}
+    var options = {width: 1200,height: 500, 
+                  chart: {
+                    title: 'Sentiment vs. Subjectivity Scatter Plot',
+                    subtitle: 'Based on recent 1k comments',
+                   },
+                  hAxis: {title: 'Subjectivity'},
+                  vAxis: {title: 'Sentiment'},
+                  vAxis:{viewWindow: {max: 1,min: -1}}};
+    var scatter_chart = new google.charts.Scatter(document.getElementById('scatter_chart'));
+    if (typeof chartReady !== 'undefined') google.visualization.events.addOneTimeListener(chart, 'ready', chartReady);
+    scatter_chart.draw(data, google.charts.Scatter.convertOptions(options));
+  }
 
+  //curve chart--------------------------------------
 
-
- <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-
-      // Load the Visualization API and the piechart package.
-      google.load('visualization', '1.0', {'packages':['corechart']});
-
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.setOnLoadCallback(drawChart);
-
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      function drawChart() {
-
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
+  function CurveChart(chartReady) 
+  {
+    var chartDiv = document.getElementById('curve_chart');
+    var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Comments');
+        data.addColumn('number', "Subjectivity(0:Objective 1:Subjective)");
+        data.addColumn('number', "Sentiment(-1: Negative 1: Positive)");
         data.addRows([
-          ['Positive', {{ pos }}],
-          ['Negative', {{ neu }}],
-          ['Neutual',{{ neg }}],
+            ['0k-.1k',  {{curv.0}},  {{curv.1}}],
+            ['.1k-.2k', {{curv.2}},  {{curv.3}}],
+            ['.2k-.3k', {{curv.4}},  {{curv.5}}],
+            ['.3k-.4k', {{curv.6}},  {{curv.7}}],
+            ['.4k-.5k', {{curv.8}},  {{curv.9}}],
+            ['.5k-.6k', {{curv.10}},  {{curv.11}}],
+            ['.6k-.9k', {{curv.12}},  {{curv.13}}],
+            ['.7k-.8k', {{curv.14}},  {{curv.15}}],  
+            ['.8k-.9k', {{curv.16}},  {{curv.17}}],
+            ['.9k-1k',  {{curv.18}},  {{curv.19}}]
+          ]);
+    var classicOptions = {title: 'Sentiment & Subjectivity Trend in Recent 1k Comments',
+                          width: 1200,height: 500,
+                          curveType: 'function',
+                          series: {0: {targetAxisIndex: 0},1: {targetAxisIndex: 1}},
+                          vAxes: {0: {title: 'Sentiment (-1.0 ~ 1.0)'},1: {title: 'Sbujectivity (0.0 ~ 1.0)'}},
+                          vAxis:{viewWindow: {max: 1,min: -1}}
+                          }
 
-        ]);
-
-        // Set chart options
-        var options = {'title':'How Does Public Think About it?',
-                       'width':700,
-                       'height':400};
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-    </script>
-   <div id="chart_div" >Sentiment Analysis Result:</div>
-
+    var classicChart = new google.visualization.LineChart(chartDiv);
+    classicChart.draw(data, classicOptions);
+  }
+  function drawCharts() 
+  {
+    PieChart();
+    GaugeChart();
+    ScatterChart();
+    CurveChart();
+  }
+</script>
+<center>
+  <div id="scatter_chart" style="width: 900px; height: 500px;margin-right: 300px;"></div>
+  <div id="curve_chart" style="width: 900px; height: 500px;margin-right: 300px;"></div>
+  <div style="display: table ">
+    <div id="pie_chart" style="display:table-cell;">Sentiment Analysis Result:</div>
+    <div id="gauge_chart1" style="display:table-cell;"></div>
+    <div id="gauge_chart2" style="display:table-cell;"></div>
+  </div>
+</center>
 {% else %}
 <title> This topic doesn't have enough opinions for analysis </title>
 {% endif %}

@@ -1,0 +1,41 @@
+h2 {
+  font-size: 2em;
+  margin-top: 40px;
+  text-align: center;
+  letter-spacing: -2px;
+}
+.button {
+    display:table-block;
+    height: 40px;
+    width: 200px;
+    background: #66ffff;
+    border: 1px solid rgba(33, 68, 72, 0.59);
+	
+	color: rgba(0, 0, 0, 0.55);
+    text-align: center;
+    font: bold 1.0em/20px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	
+	/*Step 4: Fancy CSS3 Styles*/
+    background: -webkit-linear-gradient(top, #33FF99, #33ffff);
+    background: -moz-linear-gradient(top, #33FF99, #33ffff);
+    background: -o-linear-gradient(top, #33FF99, #33ffff);
+    background: -ms-linear-gradient(top, #33FF99, #33ffff);
+    background: linear-gradient(top, #33FF99, #33ffff);
+     
+    -webkit-border-radius: 50px;
+    -khtml-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+}
+a.button {
+    text-decoration: none;
+}
+
+a.button:hover {
+    background: #3d7a80;
+    background: -webkit-linear-gradient(top, #3d7a80, #2f5f63);
+    background: -moz-linear-gradient(top, #3d7a80, #2f5f63);
+    background: -o-linear-gradient(top, #3d7a80, #2f5f63);
+    background: -ms-linear-gradient(top, #3d7a80, #2f5f63);
+    background: linear-gradient(top, #3d7a80, #2f5f63);
+}

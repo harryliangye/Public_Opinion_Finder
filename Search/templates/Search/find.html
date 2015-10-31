@@ -1,16 +1,46 @@
 {% if result_list %}
-<h2><center>Search Result for : "{{query}}"</center></h2><br>
+{% load staticfiles %}
+<head>
+<title>Search Result For : "{{query}}"</title>
+<link rel="stylesheet" type="text/css" href="{% static 'Search/css/findstyle.css'%}">
+</head>
+<h1><center>Search Result For : "{{query}}"</center></h1>
+<br>
+<center>
+<form align="center" action="SentimentView/" name="M" method="post" style="display:table">
+ {% csrf_token %}
+    <a href="http://harryliangye.pythonanywhere.com/" class="button">Return to Home Page</a>
+    &nbsp;&nbsp;&nbsp;
+    <input type="submit" name = "S" value="Sentiment Anslysis" class = "button" onclick="showDiv()">
+    &nbsp;&nbsp;&nbsp;
+    <a href="http://harryliangye.pythonanywhere.com/Search/" class="button">New Search</a>
+</form>
+    <div id="loadpage" style="display:none;position:absolute; 
+    left:0px; top:0px; background-color:white; 
+    layer-background-color:white; height:100%; 
+    width:100%;"> 
+      <p align="center" style="font-size: large;">
+        <B>Analyzing ... ... Please wait!</B>
+      </p>
+    </div>
+</center>
+<p>
+    Sentiment Index:
+    <span style="background:#33ff33;">😊 : Positive</span> 
+    <span style="background:yellow;">O : Neutual</span>
+    <span style="background:#ff0000;">😢 : Negative</span>
+</p>
     <ul style="list-style-type:square">
     {% for result in result_list %}
         <li>
-            {{ result.text }} 
-            {% if result.polarity > 0.2 %}
-                <span style="background:green;">Happy</span>
-                {% elif result.polarity > 0 %}
-                    <span style="background:yellow;">Neutral</span>
+            {% if result.polarity > 0.1 %}
+                <span style="background:#33ff33;">😊</span>
+                {% elif result.polarity > -0.1 %}
+                    <span style="background:yellow;">O</span>
                 {% else %}
-                    <span style="background:red;">Sad</span>
+                    <span style="background:#ff0000;">😢</span>
             {% endif %}
+            {{ result.text }}
             {% if result.url != "empty" and result.url|length > 10 %}
                <a href="{{ result.url }}"> -> link <- </a>
             {% endif %}
@@ -27,14 +57,14 @@
 	{% if page > 1 %}
  	<input type="submit" name = "P" value="<< Previous Page">
 	{% endif %}
+     Page:{{page}} 
     {% if result_list|length == 20 %}
 	<input type="submit" name = "N" value="Next Page >>">
     {% endif %}
 </form>
-
-<form align="center" action="SentimentView/" name="SentimentView" method="post">
-{% csrf_token %}
-<input type="submit" name = "" value="Sentiment Analysis">
-</form>
-
+<script>
+function showDiv() {
+   document.getElementById('loadpage').style.display = "block";
+}
+</script>
  <a href="http://harryliangye.pythonanywhere.com">Back to Home Page</a>
